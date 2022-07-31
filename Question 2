@@ -1,0 +1,82 @@
+import java.util.*;
+
+class Node
+{
+    int value;
+    Node left, right;
+    Node(int i)			
+    {
+        value = i;
+        left = right = null;
+    }
+}
+public class SkewTree {
+	 
+	public static Node node;
+    static Node previousNode = null;
+    static Node headNode = null;
+   
+    static void BSTToSkew(Node root, int order) 
+    {
+       
+        if(root == null)
+        {
+            return;
+        }
+       
+        if(order > 0)
+        {
+        	BSTToSkew(root.right, order);
+        }
+        
+        Node rightNode = root.right;
+        Node leftNode = root.left;
+       
+        if(headNode == null)
+        {
+            headNode = root;
+            root.left = null;
+            previousNode = root;
+        }
+        else
+        {
+            previousNode.right = root;
+            root.left = null;
+            previousNode = root;
+        }
+       
+        if (order > 0)
+        {
+        	BSTToSkew(leftNode, order);
+        }
+        else
+        {
+        	BSTToSkew(rightNode, order);
+        }
+    }
+   
+    static void traverseRight(Node root)
+    {
+        if(root == null)
+        {
+            return;
+        }
+        System.out.print(root.value + " ");
+        traverseRight(root.right);       
+    }
+    
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+			    SkewTree tree = new SkewTree();
+			    tree.node = new Node(50);
+	        tree.node.left = new Node(30);
+	        tree.node.left = new Node(10);
+	        tree.node.right = new Node(60);
+	        tree.node.right = new Node(55);
+	        int order = 0;
+	        BSTToSkew(node, order);
+	        traverseRight(headNode);
+	}
+
+}
